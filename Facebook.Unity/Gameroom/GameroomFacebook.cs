@@ -202,6 +202,14 @@ namespace Facebook.Unity.Gameroom
                 callback);
         }
 
+        public override void SharePhoto(
+            string photoPath,
+            string hashTag,
+            FacebookDelegate<IShareResult> callback)
+        {
+            // TODO
+        }
+
         public void Pay(
             string product,
             string action,

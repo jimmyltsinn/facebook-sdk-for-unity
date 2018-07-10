@@ -224,6 +224,19 @@ namespace Facebook.Unity.Mobile.Android
             call.Call(args);
         }
 
+        public override void SharePhoto(
+            string photoPath,
+            string hashTag,
+            FacebookDelegate<IShareResult> callback)
+        {
+            MethodArguments args = new MethodArguments();
+            args.AddString("photo_path", photoPath);
+            args.AddString("hash_tag", hashTag);
+            var sharePhotoCall = new JavaMethodCall<IShareResult>(this, "SharePhoto");
+            sharePhotoCall.Callback = callback;
+            sharePhotoCall.Call(args);
+        }
+
         public override void GetAppLink(
             FacebookDelegate<IAppLinkResult> callback)
         {

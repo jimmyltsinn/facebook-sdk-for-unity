@@ -228,6 +228,17 @@ namespace Facebook.Unity.Mobile.IOS
                 mediaSource);
         }
 
+        public override void SharePhoto(
+            string photoPath,
+            string hashTag, 
+            FacebookDelegate<IShareResult> callback)
+        {
+            this.iosWrapper.SharePhoto(
+                this.AddCallback(callback),
+                photoPath,
+                hashTag);
+        }
+
         public override void AppEventsLogEvent(
             string logEvent,
             float? valueToSum,

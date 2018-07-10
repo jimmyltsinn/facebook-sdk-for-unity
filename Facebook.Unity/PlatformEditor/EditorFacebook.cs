@@ -146,6 +146,17 @@ namespace Facebook.Unity.Editor
                 this.CallbackManager.AddFacebookDelegate(callback));
         }
 
+        public override void SharePhoto(
+            string photoPath,
+            string hashTag,
+            FacebookDelegate<IShareResult> callback)
+        {
+            this.editorWrapper.ShowMockShareDialog(
+                this.OnShareLinkComplete,
+                "SharePhoto",
+                this.CallbackManager.AddFacebookDelegate(callback));
+        }
+
         public override void ActivateApp(string appId)
         {
             FacebookLogger.Log("Pew! Pretending to send this off.  Doesn't actually work in the editor");

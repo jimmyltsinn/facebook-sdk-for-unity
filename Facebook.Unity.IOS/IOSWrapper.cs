@@ -102,6 +102,18 @@ namespace Facebook.Unity.IOS
                 mediaSource);
         }
 
+        public void SharePhoto(
+            int requestId,
+            string photoPath,
+            string hashTag)
+        {
+            IOSWrapper.IOSFBSharePhoto(
+                requestId,
+                photoPath,
+                hashTag);
+        }
+
+
         public void AppRequest(
             int requestId,
             string message,
@@ -245,6 +257,12 @@ namespace Facebook.Unity.IOS
             string linkDescription,
             string picture,
             string mediaSource);
+
+        [DllImport("__Internal")]
+        private static extern void IOSFBSharePhoto(
+            int requireId,
+            string photoPath,
+            string hashTag);
 
         [DllImport("__Internal")]
         private static extern void IOSFBAppRequest(

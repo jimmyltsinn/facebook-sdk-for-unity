@@ -121,6 +121,11 @@ namespace Facebook.Unity
             string mediaSource,
             FacebookDelegate<IShareResult> callback);
 
+        public abstract void SharePhoto(
+            string photoURL,
+            string hashTag,
+            FacebookDelegate<IShareResult> callback);
+
         public void API(
             string query,
             HttpMethod method,

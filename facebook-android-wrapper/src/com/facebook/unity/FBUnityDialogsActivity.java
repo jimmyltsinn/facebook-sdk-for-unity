@@ -37,6 +37,7 @@ public class FBUnityDialogsActivity extends BaseActivity {
     public static final String DIALOG_TYPE = "dialog_type";
     public static final String SHARE_DIALOG_PARAMS = "share_dialog_params";
     public static final String FEED_DIALOG_PARAMS = "feed_dialog_params";
+    public static final String SHARE_PHOTO_DIALOG_PARAMS = "share_photo_dialog_params";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,9 @@ public class FBUnityDialogsActivity extends BaseActivity {
         if (intent.hasExtra(SHARE_DIALOG_PARAMS)) {
             params = intent.getBundleExtra(SHARE_DIALOG_PARAMS);
             shareContent = FBDialogUtils.createShareContentBuilder(params).build();
+        } else if (intent.hasExtra(SHARE_PHOTO_DIALOG_PARAMS)) {
+            params = intent.getBundleExtra(SHARE_PHOTO_DIALOG_PARAMS);
+            shareContent = FBDialogUtils.createSharePhotoContentBuilder(params).build();
         } else if (intent.hasExtra(FEED_DIALOG_PARAMS)) {
             params = intent.getBundleExtra(FEED_DIALOG_PARAMS);
             shareContent = FBDialogUtils.createFeedContentBuilder(params).build();

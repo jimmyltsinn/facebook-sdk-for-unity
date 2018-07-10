@@ -542,6 +542,23 @@ namespace Facebook.Unity
         }
 
         /// <summary>
+        /// Opens a share dialog for sharing a photo.
+        /// </summary>
+        /// <param name="photoPath">The path of the photo to share.</param>
+        /// <param name="hashTag">The hashtag pre-filled for the description..</param>
+        /// <param name="callback">A callback for when the request completes.</param>
+        public static void SharePhoto(
+            string photoPath = null,
+            string hashTag = "",
+            FacebookDelegate<IShareResult> callback = null)
+        {
+            FacebookImpl.SharePhoto(
+                photoPath,
+                hashTag,
+                callback);
+        }
+
+        /// <summary>
         /// Makes a call to the Facebook Graph API.
         /// </summary>
         /// <param name="query">

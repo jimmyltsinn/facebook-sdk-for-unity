@@ -200,6 +200,17 @@ public class FB {
         getUnityActivity().startActivity(intent);
     }
 
+    @UnityCallable
+    public static void SharePhoto(String params_str) {
+        Log.v(TAG, "SharePhoto(" + params_str + ")");
+        final UnityParams unity_params = UnityParams.parse(params_str);
+        final Bundle params = unity_params.getStringParams();
+        Intent intent = new Intent(getUnityActivity(), FBUnityDialogsActivity.class);
+        intent.putExtra(FBUnityDialogsActivity.DIALOG_TYPE, ShareDialogMode);
+        intent.putExtra(FBUnityDialogsActivity.SHARE_PHOTO_DIALOG_PARAMS, params);
+        getUnityActivity().startActivity(intent);
+    }
+
     public static void SetIntent(Intent intent) {
         FB.intent = intent;
     }

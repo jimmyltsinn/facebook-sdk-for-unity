@@ -22,10 +22,15 @@ package com.facebook.unity;
 
 import com.facebook.share.internal.ShareFeedContent;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 class FBDialogUtils {
     public static ShareLinkContent.Builder createShareContentBuilder(Bundle params) {
@@ -45,6 +50,22 @@ class FBDialogUtils {
 
         if (params.containsKey("photo_url")) {
             builder.setImageUrl(Uri.parse(params.getString("photo_url")));
+        }
+
+        return builder;
+    }
+
+    private static String TAG = FBUnityDialogsActivity.class.getName();
+
+    public static SharePhotoContent.Builder createSharePhotoContentBuilder(Bundle params) {
+        SharePhotoContent.Builder builder = new SharePhotoContent.Builder(); 
+
+        if (params.containsKey("photo_path")) {
+            builder.addPhoto(new SharePhoto.Builder().setBitmap(BitmapFactory.decodeFile(params.getString("photo_path"))).build()); 
+        }
+
+        if (params.containsKey("hash_tag")) {
+            builder.setShareHashtag(new ShareHashtag.Builder().setHashtag(params.getString("hash_tag")).build());
         }
 
         return builder;

@@ -297,6 +297,40 @@ isPublishPermLogin:(BOOL)isPublishPermLogin
   }
 }
 
+- (void)sharePhotoWithRequestId:(int)requestId
+                      photoPath:(const char *)path
+                        hashtag:(const char *)hashtag
+{
+  FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+  photo.image = [UIImage imageWithContentsOfFile:[FBUnityUtility stringFromCString:path]];
+  photo.userGenerated = YES;
+  FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+  content.photos = @[photo];
+  content.hashtag = [FBSDKHashtag hashtagWithString:[FBUnityUtility stringFromCString:hashtag]];
+  [self sharePhotoWithRequestId:requestId
+                   shareContent:content
+                     dialogMode:[self getDialogMode]];
+}
+
+- (void)sharePhotoWithRequestId:(int)requestId
+                   shareContent:(FBSDKSharePhotoContent *)photoContent
+                     dialogMode:(FBSDKShareDialogMode)dialogMode
+{
+  FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+  dialog.shareContent = photoContent;
+  dialog.mode = dialogMode;
+  FBUnitySDKDelegate *delegate = [FBUnitySDKDelegate instanceWithRequestID:requestId];
+  dialog.delegate = delegate;
+  
+  NSError *error;
+  if (![dialog validateWithError:&error]) {
+    [FBUnityUtility sendErrorToUnity:FBUnityMessageName_OnShareLinkComplete error:error requestId:requestId];
+  }
+  if (![dialog show]) {
+    [FBUnityUtility sendErrorToUnity:FBUnityMessageName_OnShareLinkComplete errorMessage:@"Failed to show share dialog" requestId:requestId];
+  }
+}
+
 - (FBSDKShareDialogMode)getDialogMode
 {
   switch (self.shareDialogMode) {
@@ -458,6 +492,15 @@ extern "C" {
                                               linkDescription:linkDescription
                                                       picture:picture
                                                   mediaSource:mediaSource];
+  }
+
+  void IOSFBSharePhoto(int requestId,
+                   const char *photoPath,
+                   const char *hashtag)
+  {
+    [[FBUnityInterface sharedInstance] sharePhotoWithRequestId:requestId
+                                                     photoPath:photoPath
+                                                       hashtag:hashtag];
   }
 
   void IOSFBSettingsActivateApp(const char *appId)
